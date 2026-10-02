@@ -1,0 +1,323 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <h1>Inventory Management System</h1>
+    <p>Automatic Stock Monitoring and Withdrawal System</p>
+</header>
+
+<main class="container">
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section class="dashboard">
+
+        <div class="card total">
+            <h3>Total Items</h3>
+            <div id="totalItems" class="number">0</div>
+        </div>
+
+        <div class="card quantity">
+            <h3>Total Quantity</h3>
+            <div id="totalQuantity" class="number">0</div>
+        </div>
+
+        <div class="card low">
+            <h3>Low Stock</h3>
+            <div id="lowStock" class="number">0</div>
+        </div>
+
+        <div class="card medium">
+            <h3>Medium Stock</h3>
+            <div id="mediumStock" class="number">0</div>
+        </div>
+
+        <div class="card full">
+            <h3>Full Stock</h3>
+            <div id="fullStock" class="number">0</div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= ADD ITEM ================= -->
+
+    <section class="panel">
+
+        <h2>➕ Add New Inventory Item</h2>
+
+        <div class="form-grid">
+
+            <input
+                type="text"
+                id="itemCode"
+                placeholder="Item Code">
+
+            <input
+                type="text"
+                id="itemName"
+                placeholder="Item Name">
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Initial Quantity"
+                min="0">
+
+            <input
+                type="number"
+                id="reorderLevel"
+                placeholder="Reorder Level"
+                min="0">
+
+            <input
+                type="number"
+                id="maxStock"
+                placeholder="Maximum Stock"
+                min="1">
+
+        </div>
+
+        <div class="button-row">
+
+            <button
+                class="btn primary"
+                onclick="addItem()">
+                Add Item
+            </button>
+
+            <button
+                class="btn purple"
+                onclick="exportInventory()">
+                Export Inventory
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ADD STOCK ================= -->
+
+    <section class="panel">
+
+        <h2>📦 Add Stock</h2>
+
+        <div class="form-grid">
+
+            <select id="addStockItem">
+                <option value="">Select Item</option>
+            </select>
+
+            <input
+                type="number"
+                id="addStockQuantity"
+                placeholder="Quantity to Add"
+                min="1">
+
+            <input
+                type="text"
+                id="stockSupplier"
+                placeholder="Supplier / Source">
+
+            <input
+                type="text"
+                id="stockReference"
+                placeholder="PO / Reference Number">
+
+        </div>
+
+        <div class="button-row">
+
+            <button
+                class="btn success"
+                onclick="addStock()">
+                Add Stock
+            </button>
+
+        </div>
+
+        <div
+            id="addStockMessage"
+            class="message">
+        </div>
+
+    </section>
+
+
+    <!-- ================= WITHDRAW ITEM ================= -->
+
+    <section class="panel withdrawal-panel">
+
+        <h2>📤 Withdraw Item</h2>
+
+        <div class="form-grid">
+
+            <select
+                id="withdrawItem"
+                onchange="showAvailableStock()">
+
+                <option value="">
+                    Select Item
+                </option>
+
+            </select>
+
+            <input
+                type="number"
+                id="withdrawQuantity"
+                placeholder="Quantity to Withdraw"
+                min="1">
+
+            <input
+                type="text"
+                id="withdrawRequester"
+                placeholder="Requester / Employee">
+
+            <input
+                type="text"
+                id="withdrawPurpose"
+                placeholder="Purpose">
+
+        </div>
+
+        <div class="available">
+            Available Stock:
+            <strong id="availableStock">0</strong>
+        </div>
+
+        <div class="button-row">
+
+            <button
+                class="btn danger"
+                onclick="withdrawItem()">
+                Withdraw Item
+            </button>
+
+        </div>
+
+        <div
+            id="withdrawMessage"
+            class="message">
+        </div>
+
+    </section>
+
+
+    <!-- ================= INVENTORY ================= -->
+
+    <section class="panel">
+
+        <div class="section-header">
+
+            <h2>📋 Current Inventory</h2>
+
+            <input
+                type="text"
+                id="search"
+                class="search"
+                placeholder="Search item..."
+                onkeyup="displayInventory()">
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Reorder</th>
+                        <th>Maximum</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="inventoryTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= WITHDRAWAL HISTORY ================= -->
+
+    <section class="panel">
+
+        <div class="section-header">
+
+            <h2>📜 Withdrawal History</h2>
+
+            <button
+                class="btn purple"
+                onclick="exportWithdrawals()">
+                Export History
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Date & Time</th>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Withdrawn</th>
+                        <th>Remaining</th>
+                        <th>Requester</th>
+                        <th>Purpose</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="withdrawalTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    Inventory Management System
+    <br>
+    Automatic Local Storage Save
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
+```
