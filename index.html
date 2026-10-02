@@ -1,323 +1,1874 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Inventory Management System</title>
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="style.css">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Inventory Management System</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f3f4f6;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: #1f2937;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin: 6px 0 0;
+    opacity: 0.8;
+}
+
+/* MAIN CONTAINER */
+
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 25px auto;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.card .number {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.card-total {
+    border-top: 5px solid #374151;
+}
+
+.card-quantity {
+    border-top: 5px solid #2563eb;
+}
+
+.card-low {
+    border-top: 5px solid #dc2626;
+}
+
+.card-medium {
+    border-top: 5px solid #f59e0b;
+}
+
+.card-full {
+    border-top: 5px solid #16a34a;
+}
+
+/* PANELS */
+
+.panel {
+    background: white;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+/* FORM */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* BUTTONS */
+
+button {
+    padding: 11px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-add {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #15803d;
+}
+
+.btn-withdraw {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-withdraw:hover {
+    background: #b91c1c;
+}
+
+.btn-edit {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-export {
+    background: #7c3aed;
+    color: white;
+}
+
+.btn-clear {
+    background: #6b7280;
+    color: white;
+}
+
+/* SEARCH */
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+/* TABLE */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #1f2937;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 11px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f9fafb;
+}
+
+/* STATUS */
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-low {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.status-medium {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.status-full {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* ACTIONS */
+
+.actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* MESSAGE */
+
+.message {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+/* WITHDRAWAL FORM */
+
+.withdraw-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1000px) {
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid,
+    .withdraw-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid,
+    .withdraw-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<header class="header">
-    <h1>Inventory Management System</h1>
-    <p>Automatic Stock Monitoring and Withdrawal System</p>
+
+<header>
+
+<h1>Inventory Management System</h1>
+
+<p>
+Automatic Stock Monitoring and Withdrawal System
+</p>
+
 </header>
 
-<main class="container">
 
-    <!-- ================= DASHBOARD ================= -->
+<div class="container">
 
-    <section class="dashboard">
 
-        <div class="card total">
-            <h3>Total Items</h3>
-            <div id="totalItems" class="number">0</div>
-        </div>
+<!-- =====================================================
+     DASHBOARD
+====================================================== -->
 
-        <div class="card quantity">
-            <h3>Total Quantity</h3>
-            <div id="totalQuantity" class="number">0</div>
-        </div>
+<div class="dashboard">
 
-        <div class="card low">
-            <h3>Low Stock</h3>
-            <div id="lowStock" class="number">0</div>
-        </div>
+<div class="card card-total">
 
-        <div class="card medium">
-            <h3>Medium Stock</h3>
-            <div id="mediumStock" class="number">0</div>
-        </div>
+<h3>Total Items</h3>
 
-        <div class="card full">
-            <h3>Full Stock</h3>
-            <div id="fullStock" class="number">0</div>
-        </div>
+<div class="number"
+     id="totalItems">
+0
+</div>
 
-    </section>
+</div>
 
 
-    <!-- ================= ADD ITEM ================= -->
+<div class="card card-quantity">
 
-    <section class="panel">
+<h3>Total Quantity</h3>
 
-        <h2>➕ Add New Inventory Item</h2>
+<div class="number"
+     id="totalQuantity">
+0
+</div>
 
-        <div class="form-grid">
+</div>
 
-            <input
-                type="text"
-                id="itemCode"
-                placeholder="Item Code">
 
-            <input
-                type="text"
-                id="itemName"
-                placeholder="Item Name">
+<div class="card card-low">
 
-            <input
-                type="number"
-                id="quantity"
-                placeholder="Initial Quantity"
-                min="0">
+<h3>Low Stock</h3>
 
-            <input
-                type="number"
-                id="reorderLevel"
-                placeholder="Reorder Level"
-                min="0">
+<div class="number"
+     id="lowStock">
+0
+</div>
 
-            <input
-                type="number"
-                id="maxStock"
-                placeholder="Maximum Stock"
-                min="1">
+</div>
 
-        </div>
 
-        <div class="button-row">
+<div class="card card-medium">
 
-            <button
-                class="btn primary"
-                onclick="addItem()">
-                Add Item
-            </button>
+<h3>Medium Stock</h3>
 
-            <button
-                class="btn purple"
-                onclick="exportInventory()">
-                Export Inventory
-            </button>
+<div class="number"
+     id="mediumStock">
+0
+</div>
 
-        </div>
+</div>
 
-    </section>
 
+<div class="card card-full">
 
-    <!-- ================= ADD STOCK ================= -->
+<h3>Full Stock</h3>
 
-    <section class="panel">
+<div class="number"
+     id="fullStock">
+0
+</div>
 
-        <h2>📦 Add Stock</h2>
+</div>
 
-        <div class="form-grid">
+</div>
 
-            <select id="addStockItem">
-                <option value="">Select Item</option>
-            </select>
 
-            <input
-                type="number"
-                id="addStockQuantity"
-                placeholder="Quantity to Add"
-                min="1">
 
-            <input
-                type="text"
-                id="stockSupplier"
-                placeholder="Supplier / Source">
+<!-- =====================================================
+     ADD NEW ITEM
+====================================================== -->
 
-            <input
-                type="text"
-                id="stockReference"
-                placeholder="PO / Reference Number">
+<div class="panel">
 
-        </div>
+<h2>➕ Add New Inventory Item</h2>
 
-        <div class="button-row">
+<div class="form-grid">
 
-            <button
-                class="btn success"
-                onclick="addStock()">
-                Add Stock
-            </button>
+<input
+    type="text"
+    id="itemCode"
+    placeholder="Item Code">
 
-        </div>
+<input
+    type="text"
+    id="itemName"
+    placeholder="Item Name">
 
-        <div
-            id="addStockMessage"
-            class="message">
-        </div>
+<input
+    type="number"
+    id="quantity"
+    placeholder="Initial Quantity"
+    min="0">
 
-    </section>
+<input
+    type="number"
+    id="reorderLevel"
+    placeholder="Reorder Level"
+    min="0">
 
+<input
+    type="number"
+    id="maxStock"
+    placeholder="Maximum Stock"
+    min="1">
 
-    <!-- ================= WITHDRAW ITEM ================= -->
+</div>
 
-    <section class="panel withdrawal-panel">
+<br>
 
-        <h2>📤 Withdraw Item</h2>
+<button
+    class="btn-primary"
+    onclick="addItem()">
 
-        <div class="form-grid">
+Add New Item
 
-            <select
-                id="withdrawItem"
-                onchange="showAvailableStock()">
+</button>
 
-                <option value="">
-                    Select Item
-                </option>
+<button
+    class="btn-export"
+    onclick="exportInventory()">
 
-            </select>
+Export Inventory
 
-            <input
-                type="number"
-                id="withdrawQuantity"
-                placeholder="Quantity to Withdraw"
-                min="1">
+</button>
 
-            <input
-                type="text"
-                id="withdrawRequester"
-                placeholder="Requester / Employee">
+</div>
 
-            <input
-                type="text"
-                id="withdrawPurpose"
-                placeholder="Purpose">
 
-        </div>
 
-        <div class="available">
-            Available Stock:
-            <strong id="availableStock">0</strong>
-        </div>
+<!-- =====================================================
+     ADD STOCK
+====================================================== -->
 
-        <div class="button-row">
+<div class="panel">
 
-            <button
-                class="btn danger"
-                onclick="withdrawItem()">
-                Withdraw Item
-            </button>
+<h2>📦 Add Stock</h2>
 
-        </div>
+<div class="withdraw-grid">
 
-        <div
-            id="withdrawMessage"
-            class="message">
-        </div>
+<select id="addStockItem">
 
-    </section>
+<option value="">
+Select Item
+</option>
 
+</select>
 
-    <!-- ================= INVENTORY ================= -->
 
-    <section class="panel">
+<input
+    type="number"
+    id="addStockQuantity"
+    placeholder="Quantity to Add"
+    min="1">
 
-        <div class="section-header">
 
-            <h2>📋 Current Inventory</h2>
+<input
+    type="text"
+    id="stockSupplier"
+    placeholder="Supplier / Source">
 
-            <input
-                type="text"
-                id="search"
-                class="search"
-                placeholder="Search item..."
-                onkeyup="displayInventory()">
 
-        </div>
+<input
+    type="text"
+    id="stockReference"
+    placeholder="Reference / PO Number">
 
+</div>
 
-        <div class="table-container">
+<br>
 
-            <table>
+<button
+    class="btn-add"
+    onclick="addStock()">
 
-                <thead>
+Add Stock
 
-                    <tr>
-                        <th>#</th>
-                        <th>Item Code</th>
-                        <th>Item Name</th>
-                        <th>Quantity</th>
-                        <th>Reorder</th>
-                        <th>Maximum</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
+</button>
 
-                </thead>
+<div
+    class="message"
+    id="addStockMessage">
+</div>
 
-                <tbody id="inventoryTable"></tbody>
+</div>
 
-            </table>
 
-        </div>
 
-    </section>
+<!-- =====================================================
+     WITHDRAW ITEM
+====================================================== -->
 
+<div class="panel">
 
-    <!-- ================= WITHDRAWAL HISTORY ================= -->
+<h2>📤 Withdraw Item</h2>
 
-    <section class="panel">
+<div class="withdraw-grid">
 
-        <div class="section-header">
+<select
+    id="withdrawItem"
+    onchange="showAvailableStock()">
 
-            <h2>📜 Withdrawal History</h2>
+<option value="">
+Select Item
+</option>
 
-            <button
-                class="btn purple"
-                onclick="exportWithdrawals()">
-                Export History
-            </button>
+</select>
 
-        </div>
 
+<input
+    type="number"
+    id="withdrawQuantity"
+    placeholder="Quantity to Withdraw"
+    min="1">
 
-        <div class="table-container">
 
-            <table>
+<input
+    type="text"
+    id="withdrawRequester"
+    placeholder="Requester / Employee">
 
-                <thead>
 
-                    <tr>
-                        <th>#</th>
-                        <th>Date & Time</th>
-                        <th>Item Code</th>
-                        <th>Item Name</th>
-                        <th>Withdrawn</th>
-                        <th>Remaining</th>
-                        <th>Requester</th>
-                        <th>Purpose</th>
-                    </tr>
+<input
+    type="text"
+    id="withdrawPurpose"
+    placeholder="Purpose">
 
-                </thead>
 
-                <tbody id="withdrawalTable"></tbody>
+</div>
 
-            </table>
+<br>
 
-        </div>
+<div>
 
-    </section>
+<strong>
+Available Stock:
+</strong>
 
-</main>
+<span id="availableStock">
+0
+</span>
+
+</div>
+
+<br>
+
+<button
+    class="btn-withdraw"
+    onclick="withdrawItem()">
+
+Withdraw Item
+
+</button>
+
+<div
+    class="message"
+    id="withdrawMessage">
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     INVENTORY
+====================================================== -->
+
+<div class="panel">
+
+<h2>📋 Current Inventory</h2>
+
+<input
+    class="search-box"
+    type="text"
+    id="search"
+    placeholder="Search item code or item name..."
+    onkeyup="displayInventory()">
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Item Code</th>
+
+<th>Item Name</th>
+
+<th>Quantity</th>
+
+<th>Reorder Level</th>
+
+<th>Maximum Stock</th>
+
+<th>Status</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="inventoryTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     WITHDRAWAL HISTORY
+====================================================== -->
+
+<div class="panel">
+
+<h2>📜 Withdrawal History</h2>
+
+<button
+    class="btn-export"
+    onclick="exportWithdrawals()">
+
+Export Withdrawal History
+
+</button>
+
+<br><br>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>#</th>
+
+<th>Date & Time</th>
+
+<th>Item Code</th>
+
+<th>Item Name</th>
+
+<th>Quantity Withdrawn</th>
+
+<th>Remaining Stock</th>
+
+<th>Requester</th>
+
+<th>Purpose</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="withdrawalTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</div>
 
 
 <footer>
-    Inventory Management System
-    <br>
-    Automatic Local Storage Save
+
+Inventory Management System
+<br>
+Automatic Local Storage Save
+
 </footer>
 
 
-<script src="script.js"></script>
+
+<script>
+
+
+/* =====================================================
+   DATA
+====================================================== */
+
+let inventory =
+    JSON.parse(
+        localStorage.getItem("inventoryData")
+    ) || [];
+
+
+let withdrawals =
+    JSON.parse(
+        localStorage.getItem("withdrawalHistory")
+    ) || [];
+
+
+let editIndex = -1;
+
+
+
+/* =====================================================
+   STOCK STATUS
+====================================================== */
+
+function getStatus(
+    quantity,
+    reorder,
+    maxStock
+) {
+
+    quantity = Number(quantity);
+    reorder = Number(reorder);
+    maxStock = Number(maxStock);
+
+
+    if (quantity <= reorder) {
+
+        return {
+            text: "Low Stock",
+            className: "status-low"
+        };
+
+    }
+
+
+    if (quantity <= maxStock * 0.70) {
+
+        return {
+            text: "Medium Stock",
+            className: "status-medium"
+        };
+
+    }
+
+
+    return {
+        text: "Full Stock",
+        className: "status-full"
+    };
+
+}
+
+
+
+/* =====================================================
+   ADD NEW ITEM
+====================================================== */
+
+function addItem() {
+
+    const code =
+        document
+        .getElementById("itemCode")
+        .value
+        .trim();
+
+
+    const name =
+        document
+        .getElementById("itemName")
+        .value
+        .trim();
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById("quantity")
+            .value
+        );
+
+
+    const reorder =
+        Number(
+            document
+            .getElementById("reorderLevel")
+            .value
+        );
+
+
+    const maxStock =
+        Number(
+            document
+            .getElementById("maxStock")
+            .value
+        );
+
+
+    if (
+        code === "" ||
+        name === "" ||
+        isNaN(quantity) ||
+        isNaN(reorder) ||
+        isNaN(maxStock)
+    ) {
+
+        alert("Please complete all fields.");
+
+        return;
+
+    }
+
+
+    if (maxStock <= 0) {
+
+        alert(
+            "Maximum stock must be greater than zero."
+        );
+
+        return;
+
+    }
+
+
+    if (reorder > maxStock) {
+
+        alert(
+            "Reorder level cannot exceed maximum stock."
+        );
+
+        return;
+
+    }
+
+
+    if (quantity > maxStock) {
+
+        alert(
+            "Initial quantity cannot exceed maximum stock."
+        );
+
+        return;
+
+    }
+
+
+    const duplicate =
+        inventory.some(
+            item =>
+            item.code.toLowerCase() ===
+            code.toLowerCase()
+        );
+
+
+    if (duplicate) {
+
+        alert(
+            "An item with this item code already exists."
+        );
+
+        return;
+
+    }
+
+
+    inventory.push({
+
+        code: code,
+
+        name: name,
+
+        quantity: quantity,
+
+        reorder: reorder,
+
+        maxStock: maxStock
+
+    });
+
+
+    saveData();
+
+    clearItemForm();
+
+    displayInventory();
+
+    updateItemDropdowns();
+
+
+    alert(
+        "Item successfully added."
+    );
+
+}
+
+
+
+/* =====================================================
+   ADD STOCK
+====================================================== */
+
+function addStock() {
+
+    const index =
+        Number(
+            document
+            .getElementById("addStockItem")
+            .value
+        );
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById("addStockQuantity")
+            .value
+        );
+
+
+    const supplier =
+        document
+        .getElementById("stockSupplier")
+        .value
+        .trim();
+
+
+    const reference =
+        document
+        .getElementById("stockReference")
+        .value
+        .trim();
+
+
+    if (
+        isNaN(index) ||
+        index < 0 ||
+        isNaN(quantity) ||
+        quantity <= 0
+    ) {
+
+        alert(
+            "Please select an item and enter a valid quantity."
+        );
+
+        return;
+
+    }
+
+
+    const item = inventory[index];
+
+
+    const newQuantity =
+        Number(item.quantity) +
+        quantity;
+
+
+    if (newQuantity > Number(item.maxStock)) {
+
+        alert(
+            "Stock cannot exceed the maximum stock level of "
+            + item.maxStock
+        );
+
+        return;
+
+    }
+
+
+    item.quantity = newQuantity;
+
+
+    saveData();
+
+    displayInventory();
+
+
+    document
+    .getElementById("addStockMessage")
+    .innerText =
+        "✓ " +
+        quantity +
+        " unit(s) added to " +
+        item.name +
+        ".";
+
+
+    document
+    .getElementById("addStockQuantity")
+    .value = "";
+
+
+    document
+    .getElementById("stockSupplier")
+    .value = "";
+
+
+    document
+    .getElementById("stockReference")
+    .value = "";
+
+
+    updateItemDropdowns();
+
+}
+
+
+
+/* =====================================================
+   WITHDRAW ITEM
+====================================================== */
+
+function withdrawItem() {
+
+    const index =
+        Number(
+            document
+            .getElementById("withdrawItem")
+            .value
+        );
+
+
+    const quantity =
+        Number(
+            document
+            .getElementById("withdrawQuantity")
+            .value
+        );
+
+
+    const requester =
+        document
+        .getElementById("withdrawRequester")
+        .value
+        .trim();
+
+
+    const purpose =
+        document
+        .getElementById("withdrawPurpose")
+        .value
+        .trim();
+
+
+    if (
+        isNaN(index) ||
+        index < 0 ||
+        isNaN(quantity) ||
+        quantity <= 0
+    ) {
+
+        alert(
+            "Please select an item and enter a valid withdrawal quantity."
+        );
+
+        return;
+
+    }
+
+
+    const item = inventory[index];
+
+
+    if (quantity > Number(item.quantity)) {
+
+        alert(
+            "Insufficient stock.\n\n" +
+            "Available: " +
+            item.quantity +
+            "\nRequested: " +
+            quantity
+        );
+
+        return;
+
+    }
+
+
+    item.quantity =
+        Number(item.quantity) -
+        quantity;
+
+
+    const now =
+        new Date();
+
+
+    const dateTime =
+        now.toLocaleString();
+
+
+    withdrawals.push({
+
+        dateTime: dateTime,
+
+        code: item.code,
+
+        name: item.name,
+
+        quantity: quantity,
+
+        remaining: item.quantity,
+
+        requester: requester || "N/A",
+
+        purpose: purpose || "N/A"
+
+    });
+
+
+    saveData();
+
+
+    displayInventory();
+
+    displayWithdrawalHistory();
+
+    updateItemDropdowns();
+
+    showAvailableStock();
+
+
+    document
+    .getElementById("withdrawQuantity")
+    .value = "";
+
+
+    document
+    .getElementById("withdrawRequester")
+    .value = "";
+
+
+    document
+    .getElementById("withdrawPurpose")
+    .value = "";
+
+
+    document
+    .getElementById("withdrawMessage")
+    .innerText =
+        "✓ " +
+        quantity +
+        " unit(s) withdrawn from " +
+        item.name +
+        ".";
+
+
+    if (
+        getStatus(
+            item.quantity,
+            item.reorder,
+            item.maxStock
+        ).text === "Low Stock"
+    ) {
+
+        alert(
+            "WARNING: " +
+            item.name +
+            " is now LOW STOCK."
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   AVAILABLE STOCK
+====================================================== */
+
+function showAvailableStock() {
+
+    const index =
+        Number(
+            document
+            .getElementById("withdrawItem")
+            .value
+        );
+
+
+    const display =
+        document
+        .getElementById("availableStock");
+
+
+    if (
+        isNaN(index) ||
+        index < 0
+    ) {
+
+        display.innerText = "0";
+
+        return;
+
+    }
+
+
+    display.innerText =
+        inventory[index].quantity;
+
+}
+
+
+
+/* =====================================================
+   DISPLAY INVENTORY
+====================================================== */
+
+function displayInventory() {
+
+    const table =
+        document
+        .getElementById("inventoryTable");
+
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+
+    table.innerHTML = "";
+
+
+    inventory.forEach(
+        (item, index) => {
+
+
+        if (
+            !item.code
+            .toLowerCase()
+            .includes(search)
+            &&
+            !item.name
+            .toLowerCase()
+            .includes(search)
+        ) {
+
+            return;
+
+        }
+
+
+        const status =
+            getStatus(
+                item.quantity,
+                item.reorder,
+                item.maxStock
+            );
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+        <td>${index + 1}</td>
+
+        <td>${item.code}</td>
+
+        <td>${item.name}</td>
+
+        <td>${item.quantity}</td>
+
+        <td>${item.reorder}</td>
+
+        <td>${item.maxStock}</td>
+
+        <td>
+
+            <span class="status ${status.className}">
+
+                ${status.text}
+
+            </span>
+
+        </td>
+
+        <td>
+
+            <div class="actions">
+
+                <button
+                    class="btn-edit"
+                    onclick="editItem(${index})">
+
+                    Edit
+
+                </button>
+
+                <button
+                    class="btn-delete"
+                    onclick="deleteItem(${index})">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+
+    updateDashboard();
+
+}
+
+
+
+/* =====================================================
+   DASHBOARD
+====================================================== */
+
+function updateDashboard() {
+
+    let totalItems =
+        inventory.length;
+
+
+    let totalQuantity = 0;
+
+    let low = 0;
+
+    let medium = 0;
+
+    let full = 0;
+
+
+    inventory.forEach(
+        item => {
+
+
+        totalQuantity +=
+            Number(item.quantity);
+
+
+        const status =
+            getStatus(
+                item.quantity,
+                item.reorder,
+                item.maxStock
+            );
+
+
+        if (
+            status.text === "Low Stock"
+        ) {
+
+            low++;
+
+        }
+
+        else if (
+            status.text === "Medium Stock"
+        ) {
+
+            medium++;
+
+        }
+
+        else {
+
+            full++;
+
+        }
+
+    });
+
+
+    document
+    .getElementById("totalItems")
+    .innerText =
+        totalItems;
+
+
+    document
+    .getElementById("totalQuantity")
+    .innerText =
+        totalQuantity;
+
+
+    document
+    .getElementById("lowStock")
+    .innerText =
+        low;
+
+
+    document
+    .getElementById("mediumStock")
+    .innerText =
+        medium;
+
+
+    document
+    .getElementById("fullStock")
+    .innerText =
+        full;
+
+}
+
+
+
+/* =====================================================
+   DROPDOWN LISTS
+====================================================== */
+
+function updateItemDropdowns() {
+
+    const addSelect =
+        document
+        .getElementById("addStockItem");
+
+
+    const withdrawSelect =
+        document
+        .getElementById("withdrawItem");
+
+
+    addSelect.innerHTML =
+        '<option value="">Select Item</option>';
+
+
+    withdrawSelect.innerHTML =
+        '<option value="">Select Item</option>';
+
+
+    inventory.forEach(
+        (item, index) => {
+
+
+        const option1 =
+            document.createElement("option");
+
+
+        option1.value = index;
+
+        option1.textContent =
+            item.code +
+            " - " +
+            item.name;
+
+
+        addSelect.appendChild(
+            option1
+        );
+
+
+        const option2 =
+            document.createElement("option");
+
+
+        option2.value = index;
+
+        option2.textContent =
+            item.code +
+            " - " +
+            item.name;
+
+
+        withdrawSelect.appendChild(
+            option2
+        );
+
+    });
+
+}
+
+
+
+/* =====================================================
+   WITHDRAWAL HISTORY
+====================================================== */
+
+function displayWithdrawalHistory() {
+
+    const table =
+        document
+        .getElementById("withdrawalTable");
+
+
+    table.innerHTML = "";
+
+
+    withdrawals
+    .slice()
+    .reverse()
+    .forEach(
+        (record, index) => {
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+        <td>${index + 1}</td>
+
+        <td>${record.dateTime}</td>
+
+        <td>${record.code}</td>
+
+        <td>${record.name}</td>
+
+        <td>${record.quantity}</td>
+
+        <td>${record.remaining}</td>
+
+        <td>${record.requester}</td>
+
+        <td>${record.purpose}</td>
+
+        `;
+
+
+        table.appendChild(row);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   EDIT ITEM
+====================================================== */
+
+function editItem(index) {
+
+    const item =
+        inventory[index];
+
+
+    document
+    .getElementById("itemCode")
+    .value =
+        item.code;
+
+
+    document
+    .getElementById("itemName")
+    .value =
+        item.name;
+
+
+    document
+    .getElementById("quantity")
+    .value =
+        item.quantity;
+
+
+    document
+    .getElementById("reorderLevel")
+    .value =
+        item.reorder;
+
+
+    document
+    .getElementById("maxStock")
+    .value =
+        item.maxStock;
+
+
+    editIndex = index;
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =====================================================
+   DELETE ITEM
+====================================================== */
+
+function deleteItem(index) {
+
+    if (
+        confirm(
+            "Delete this inventory item?"
+        )
+    ) {
+
+        inventory.splice(
+            index,
+            1
+        );
+
+
+        saveData();
+
+        displayInventory();
+
+        updateItemDropdowns();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CLEAR ITEM FORM
+====================================================== */
+
+function clearItemForm() {
+
+    document
+    .getElementById("itemCode")
+    .value = "";
+
+
+    document
+    .getElementById("itemName")
+    .value = "";
+
+
+    document
+    .getElementById("quantity")
+    .value = "";
+
+
+    document
+    .getElementById("reorderLevel")
+    .value = "";
+
+
+    document
+    .getElementById("maxStock")
+    .value = "";
+
+}
+
+
+
+/* =====================================================
+   SAVE DATA
+====================================================== */
+
+function saveData() {
+
+    localStorage.setItem(
+        "inventoryData",
+        JSON.stringify(inventory)
+    );
+
+
+    localStorage.setItem(
+        "withdrawalHistory",
+        JSON.stringify(withdrawals)
+    );
+
+}
+
+
+
+/* =====================================================
+   EXPORT INVENTORY
+====================================================== */
+
+function exportInventory() {
+
+    if (
+        inventory.length === 0
+    ) {
+
+        alert(
+            "No inventory data available."
+        );
+
+        return;
+
+    }
+
+
+    let csv =
+        "Item Code,Item Name,Quantity,Reorder Level,Maximum Stock,Status\n";
+
+
+    inventory.forEach(
+        item => {
+
+
+        const status =
+            getStatus(
+                item.quantity,
+                item.reorder,
+                item.maxStock
+            ).text;
+
+
+        csv +=
+            `"${item.code}",` +
+            `"${item.name}",` +
+            `${item.quantity},` +
+            `${item.reorder},` +
+            `${item.maxStock},` +
+            `"${status}"\n`;
+
+    });
+
+
+    downloadCSV(
+        csv,
+        "inventory_report.csv"
+    );
+
+}
+
+
+
+/* =====================================================
+   EXPORT WITHDRAWALS
+====================================================== */
+
+function exportWithdrawals() {
+
+    if (
+        withdrawals.length === 0
+    ) {
+
+        alert(
+            "No withdrawal history available."
+        );
+
+        return;
+
+    }
+
+
+    let csv =
+        "Date & Time,Item Code,Item Name,Quantity Withdrawn,Remaining Stock,Requester,Purpose\n";
+
+
+    withdrawals.forEach(
+        record => {
+
+
+        csv +=
+            `"${record.dateTime}",` +
+            `"${record.code}",` +
+            `"${record.name}",` +
+            `${record.quantity},` +
+            `${record.remaining},` +
+            `"${record.requester}",` +
+            `"${record.purpose}"\n`;
+
+    });
+
+
+    downloadCSV(
+        csv,
+        "withdrawal_history.csv"
+    );
+
+}
+
+
+
+/* =====================================================
+   DOWNLOAD CSV
+====================================================== */
+
+function downloadCSV(
+    csv,
+    filename
+) {
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download = filename;
+
+    document
+    .body
+    .appendChild(link);
+
+
+    link.click();
+
+
+    document
+    .body
+    .removeChild(link);
+
+}
+
+
+
+/* =====================================================
+   INITIALIZE
+====================================================== */
+
+displayInventory();
+
+displayWithdrawalHistory();
+
+updateItemDropdowns();
+
+</script>
 
 </body>
+
 </html>
 ```
